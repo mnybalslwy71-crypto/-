@@ -297,3 +297,40 @@ document.querySelectorAll('img').forEach((img) => {
     // ignore any read-only images or SVGs
   }
 });
+
+/* --- UI Zoom control (font-size based zoom) --- */
+const ZOOM_KEY = 'aljarafi-ui-zoom';
+const zoomOutBtn = document.getElementById('zoom-out');
+const zoomInBtn = document.getElementById('zoom-in');
+const zoomResetBtn = document.getElementById('zoom-reset');
+const zoomValueEl = document.getElementById('zoom-value');
+
+function getStoredZoom() {
+  const v = localStorage.getItem(ZOOM_KEY);
+  return v ? Number(v) : 100;
+}
+
+function applyZoom(value) {
+  const clamped = Math.min(140, Math.max(80, value));
+  document.documentElement.style.fontSize = clamped + '%';
+  if (zoomValueEl) zoomValueEl.textContent = clamped + '%';
+  try { localStorage.setItem(ZOOM_KEY, String(clamped)); } catch {}
+}
+
+function changeZoom(delta) {
+  const current = getStoredZoom();
+  applyZoom(current + delta);
+}
+
+function resetZoom() { applyZoom(100); }
+
+// Initialize zoom on load
+try {
+  applyZoom(getStoredZoom());
+} catch (e) {
+  // ignore
+}
+
+if (zoomOutBtn) zoomOutBtn.addEventListener('click', () => changeZoom(-10));
+if (zoomInBtn) zoomInBtn.addEventListener('click', () => changeZoom(10));
+if (zoomResetBtn) zoomResetBtn.addEventListener('click', resetZoom);
