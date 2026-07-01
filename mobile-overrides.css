@@ -5,8 +5,11 @@
 body{
   background-image: url('assets/hero-bg.jpg');
   background-repeat: no-repeat;
-  background-size: cover;
-  background-position: center center;
+  /* make background appear smaller and crisp in the corner */
+  background-size: 36% auto;
+  background-position: top right;
+  background-attachment: scroll;
+  font-weight: 500;
 }
 
 body::before{
@@ -51,6 +54,8 @@ header, main, footer, .page-shell, .hero, .glass-card {
   min-height: 380px;
   display: flex;
   align-items: center;
+  /* ensure hero text remains readable atop the smaller background */
+  color: #fff;
 }
 
 .hero-grid{
@@ -73,6 +78,9 @@ header, main, footer, .page-shell, .hero, .glass-card {
 
 /* Ensure footer has readable background on hero image */
 .footer{ background: rgba(0,0,0,0.55); }
+
+/* Stronger headings for readability */
+h1, h2, h3 { font-weight: 800; }
 
 /* Zoom control panel styling */
 #zoom-panel{
