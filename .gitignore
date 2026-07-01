@@ -1,0 +1,10 @@
+﻿node_modules/
+oracleJdk-26/
+portable-git/
+portable-git.zip
+.netlify/
+.vs/
+*.log
+*.tmp
+*.env
+.DS_Store
