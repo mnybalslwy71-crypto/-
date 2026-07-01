@@ -59,24 +59,101 @@ function renderComments() {
     return;
   }
 
-  comments.slice().reverse().forEach((comment) => {
-    const item = document.createElement('div');
-    item.className = 'comment-item';
-
-    const nameElement = document.createElement('strong');
-    nameElement.textContent = comment.name;
-
-    const messageElement = document.createElement('p');
-    messageElement.textContent = comment.message;
-
-    const timeElement = document.createElement('small');
-    timeElement.textContent = comment.time;
-
-    item.appendChild(nameElement);
-    item.appendChild(messageElement);
-    item.appendChild(timeElement);
-    commentsList.appendChild(item);
+  // Build tree by parentId
+  const map = new Map();
+  comments.forEach((c) => { map.set(c.id, Object.assign({}, c, { children: [] })); });
+  const roots = [];
+  comments.forEach((c) => {
+    const node = map.get(c.id);
+    if (c.parentId) {
+      const parent = map.get(c.parentId);
+      if (parent) parent.children.push(node);
+      else roots.push(node);
+    } else roots.push(node);
   });
+
+  // Render recursively (most recent first)
+  roots.slice().reverse().forEach((node) => renderCommentNode(node, commentsList));
+}
+
+function renderCommentNode(node, container, level = 0) {
+  const item = document.createElement('div');
+  item.className = 'comment-item';
+  item.style.marginLeft = `${level * 14}px`;
+
+  const header = document.createElement('div');
+  header.className = 'comment-header';
+  const nameElement = document.createElement('strong');
+  nameElement.textContent = node.name;
+  const timeElement = document.createElement('small');
+  timeElement.textContent = node.time;
+  header.appendChild(nameElement);
+  header.appendChild(timeElement);
+
+  const messageElement = document.createElement('p');
+  messageElement.textContent = node.message;
+
+  const actions = document.createElement('div');
+  actions.className = 'comment-actions';
+  const replyBtn = document.createElement('button');
+  replyBtn.type = 'button';
+  replyBtn.className = 'reply-btn';
+  replyBtn.textContent = 'رد';
+  replyBtn.addEventListener('click', () => toggleReplyForm(node.id, item));
+  actions.appendChild(replyBtn);
+
+  item.appendChild(header);
+  item.appendChild(messageElement);
+  item.appendChild(actions);
+
+  // container for replies
+  const repliesContainer = document.createElement('div');
+  repliesContainer.className = 'replies-container';
+  item.appendChild(repliesContainer);
+
+  container.appendChild(item);
+
+  if (node.children && node.children.length) {
+    node.children.slice().reverse().forEach((child) => renderCommentNode(child, repliesContainer, level + 1));
+  }
+}
+
+function toggleReplyForm(parentId, parentElement) {
+  // remove existing reply forms
+  const existing = parentElement.querySelector('.reply-form');
+  if (existing) {
+    existing.remove();
+    return;
+  }
+  // create form
+  const form = document.createElement('form');
+  form.className = 'reply-form';
+  form.innerHTML = `
+    <input name="reply-name" type="text" placeholder="اسمك" required />
+    <input name="reply-email" type="email" placeholder="بريدك" required />
+    <textarea name="reply-message" rows="3" placeholder="اكتب ردك هنا" required></textarea>
+    <div class="reply-actions"><button type="submit" class="btn">إرسال</button> <button type="button" class="btn btn-secondary cancel-reply">إلغاء</button></div>
+  `;
+  form.addEventListener('submit', (e) => handleReplySubmit(e, parentId));
+  form.querySelector('.cancel-reply').addEventListener('click', () => form.remove());
+  parentElement.appendChild(form);
+  form.querySelector('input[name="reply-name"]').focus();
+}
+
+function handleReplySubmit(event, parentId) {
+  event.preventDefault();
+  const form = event.currentTarget;
+  const name = normalizeText(form.querySelector('input[name="reply-name"]').value);
+  const email = normalizeText(form.querySelector('input[name="reply-email"]').value);
+  const message = normalizeText(form.querySelector('textarea[name="reply-message"]').value);
+  if (!name || !email || !message) return;
+  const comments = getStoredItems(STORAGE_KEY);
+  const id = Date.now().toString(36) + '-' + Math.random().toString(36).slice(2,8);
+  comments.push({ id, parentId, name, email, message, time: formatTimestamp(new Date()) });
+  saveItems(STORAGE_KEY, comments);
+  // remove any open reply forms and re-render
+  renderComments();
+  updateCommunityStatus();
 }
 
 function updateCommunityStatus() {
