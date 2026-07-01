@@ -1118,6 +1118,201 @@ button {
   .gallery-grid {
     grid-template-columns: 1fr;
   }
+}
+
+@media (max-width: 540px) {
+  .page-shell {
+    width: calc(100% - 16px);
+  }
+
+  .hero {
+    padding-top: 14px;
+    padding-bottom: 14px;
+  }
+
+  .hero-top {
+    gap: 14px;
+  }
+
+  .hero h1 {
+    font-size: 1.75rem;
+    line-height: 1.12;
+  }
+
+  .hero-copy p,
+  .about-content p,
+  .service-card p,
+  .why-card p,
+  .project-overlay p,
+  .contact-card p,
+  .comments-section p,
+  .testimonial-card p,
+  .footer p {
+    font-size: 0.95rem;
+  }
+
+  .hero-badge,
+  .eyebrow,
+  .filter-btn,
+  .contact-form input,
+  .contact-form textarea {
+    font-size: 0.92rem;
+  }
+
+  .hero-actions {
+    gap: 10px;
+  }
+
+  .btn {
+    min-height: 48px;
+    padding: 0 16px;
+    font-size: 0.95rem;
+  }
+
+  .hero-panel,
+  .about-layout,
+  .contact-grid,
+  .services-grid,
+  .why-grid,
+  .projects-grid,
+  .gallery-grid,
+  .video-grid,
+  .testimonials-grid,
+  .stats-grid {
+    gap: 14px;
+  }
+
+  .hero-card,
+  .service-card,
+  .why-card,
+  .project-item,
+  .gallery-card,
+  .contact-card,
+  .contact-form,
+  .comments-section,
+  .video-card,
+  .testimonial-card,
+  .stat-card,
+  .about-image {
+    padding: 16px;
+  }
+
+  .about-image img {
+    min-height: 320px;
+  }
+
+  .section {
+    padding: 60px 0;
+  }
+
+  .project-overlay {
+    padding: 16px;
+  }
+
+  .filter-btn {
+    padding: 10px 14px;
+  }
+
+  .contact-details {
+    gap: 8px;
+  }
+
+  .contact-details div {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  .map-placeholder {
+    min-height: 160px;
+  }
+
+  .footer {
+    padding: 28px 0 20px;
+  }
+
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .floating-actions {
+    bottom: 14px;
+    right: 10px;
+  }
+
+  .floating-btn {
+    min-height: 44px;
+    padding: 0 14px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero h1 {
+    font-size: 1.6rem;
+  }
+
+  .hero-copy p,
+  .about-content p,
+  .service-card p,
+  .why-card p,
+  .project-overlay p,
+  .contact-card p,
+  .comments-section p,
+  .testimonial-card p,
+  .footer p {
+    font-size: 0.92rem;
+  }
+
+  .hero-actions {
+    gap: 8px;
+  }
+
+  .btn {
+    min-height: 44px;
+    padding: 0 12px;
+    font-size: 0.9rem;
+  }
+
+  .hero-grid {
+    gap: 12px;
+  }
+
+  .about-image img {
+    min-height: 280px;
+  }
+
+  .project-overlay {
+    padding: 14px;
+  }
+
+  .section-head {
+    margin-bottom: 28px;
+  }
+
+  .section-head h2 {
+    font-size: 1.8rem;
+  }
+
+  .hero-card,
+  .service-card,
+  .why-card,
+  .project-item,
+  .gallery-card,
+  .contact-card,
+  .contact-form,
+  .comments-section,
+  .video-card,
+  .testimonial-card,
+  .stat-card {
+    padding: 14px;
+  }
+
+  .footer-copy {
+    margin-top: 24px;
+    font-size: 0.92rem;
+  }
+}
+
 
   .gallery-card {
     min-height: 200px;

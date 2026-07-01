@@ -1,0 +1,75 @@
+/* Mobile overrides and background image
+   Place the uploaded background image at: assets/hero-bg.jpg
+*/
+
+body{
+  background-image: url('assets/hero-bg.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+
+body::before{
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.28);
+  pointer-events: none;
+  z-index: 0;
+}
+
+header, main, footer, .page-shell, .hero, .glass-card {
+  position: relative;
+  z-index: 1;
+}
+
+@media (max-width: 480px){
+  html, body{ font-size: 14px; }
+  header{ padding: 10px 12px; }
+  .hero-copy h1{ font-size: 1.5rem; }
+  .hero-badge{ font-size: 0.85rem; }
+  .hero-actions{ display: flex; gap: 8px; flex-direction: column; }
+  .hero-panel{ margin-top: 12px; }
+  .hero-grid{ grid-template-columns: 1fr; }
+  .services-grid{ display: block; }
+  .service-card{ width: 100% !important; margin-bottom: 12px; }
+  img, .hero-image, .project-image{ max-width: 100%; height: auto; display:block; }
+  .page-shell, .content, main{ padding-left: 10px !important; padding-right: 10px !important; }
+  .comments-section, .contact-form{ width: 100%; box-sizing: border-box; }
+  button, .btn{ min-height: 44px; padding: 10px 12px; }
+  body{ background-attachment: scroll; }
+}
+
+@media (max-width: 360px){
+  html, body{ font-size: 13px; }
+  .hero-copy h1{ font-size: 1.25rem; }
+  .hero-actions .btn{ font-size: 0.95rem; }
+}
+
+/* Additional small-screen polish */
+.hero{
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+}
+
+.hero-grid{
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  gap: 16px;
+}
+
+.hero-panel{ background: rgba(255,255,255,0.03); }
+
+.services-grid{ gap: 12px; }
+
+.projects-grid, .gallery-grid{
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.project-item img, .gallery-card img{ border-radius: 6px; display:block; width:100%; height:auto; }
+
+/* Ensure footer has readable background on hero image */
+.footer{ background: rgba(0,0,0,0.55); }

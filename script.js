@@ -288,3 +288,12 @@ window.addEventListener('click', (event) => {
     closeNavbar();
   }
 });
+
+// Add loading="lazy" to images that don't already specify it (improves initial load on mobile)
+document.querySelectorAll('img').forEach((img) => {
+  try {
+    if (!img.hasAttribute('loading')) img.setAttribute('loading', 'lazy');
+  } catch (e) {
+    // ignore any read-only images or SVGs
+  }
+});
